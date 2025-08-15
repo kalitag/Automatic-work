@@ -1,0 +1,5 @@
+# Build the Docker image
+docker build -t telegram-product-bot .
+
+# Run the container
+docker run -d --name product-bot telegram-product-bot
