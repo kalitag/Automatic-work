@@ -1,9 +1,4 @@
-# Use official Python image
 FROM python:3.9-slim
-
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -34,17 +29,15 @@ RUN apt-get update && apt-get install -y \
     fonts-noto \
     && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
 WORKDIR /app
 
-# Copy requirements first for caching
-COPY requirements.txt .
+COPY repo /app
+
+# FIX: Correct the unshortenit version in requirements.txt
+RUN sed -i 's/unshortenit==1.0.3/unshortenit==0.4.0/g' /app/requirements.txt
 
 # Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy application code
-COPY bot.py .
+RUN if [ -f "/app/requirements.txt" ]; then pip install --no-cache-dir -r /app/requirements.txt; fi
 
 # Install Chrome for headless browser
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
@@ -55,5 +48,4 @@ RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.d
 # Create screenshots directory
 RUN mkdir -p /app/screenshots
 
-# Command to run the bot
 CMD ["python", "bot.py"]
