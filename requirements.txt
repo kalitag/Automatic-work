@@ -1,0 +1,12 @@
+python-telegram-bot==20.6
+requests==2.31.0
+beautifulsoup4==4.12.2
+lxml==4.9.3
+Pillow==10.2.0
+easyocr==1.7.0
+selenium==4.19.0
+webdriver-manager==4.0.1
+unshortenit==1.0.3
+numpy==1.26.4
+opencv-python-headless==4.9.0.80
+aiohttp==3.9.3
